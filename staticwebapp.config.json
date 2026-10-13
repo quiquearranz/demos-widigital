@@ -1,0 +1,9 @@
+{
+  "trailingSlash": "auto",
+  "globalHeaders": {
+    "X-Robots-Tag": "noindex, nofollow"
+  },
+  "responseOverrides": {
+    "404": { "redirect": "/", "statusCode": 302 }
+  }
+}
