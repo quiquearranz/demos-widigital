@@ -5,41 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Demos Widigital</title>
-<style>
-  :root { --bg:#f7f7f8; --card:#fff; --text:#1a1a1a; --muted:#666; --accent:#0f6cbd; --border:#e3e3e6; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#151517; --card:#1f1f22; --text:#eee; --muted:#a0a0a6; --accent:#4ca3ff; --border:#333338; }
-  }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: "Segoe UI", system-ui, sans-serif; background:var(--bg); color:var(--text); }
-  main { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
-  h1 { margin: 0 0 4px; font-size: 1.8rem; }
-  p.sub { margin: 0 0 32px; color: var(--muted); }
-  h2 { font-size: 1rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 32px 0 12px; }
-  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px; }
-  a.card { display:block; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:10px; text-decoration:none; color:inherit; transition: border-color .15s; }
-  a.card:hover { border-color: var(--accent); }
-  a.card strong { display:block; margin-bottom:6px; }
-  a.card span { color: var(--muted); font-size: .9rem; }
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/wi.css">
 </head>
 <body>
-<main>
-  <h1>Demos Widigital</h1>
-  <p class="sub">Prototipos y prueba de concepto para clientes</p>
-  <div id="catalogo"></div>
-</main>
-<script>
-  const demos = [
-    { cliente: "Barents", titulo: "Claims", descripcion: "Gestión de siniestros", ruta: "/barents/claims/" }
-  ];
+<header class="top"><div class="wrap">
+  <a class="logo" href="/" aria-label="widigital"><svg viewBox="0 0 40 28" aria-hidden="true"><path fill="#E73088" d="M0 0h16L8 14z"/><path fill="#F49C24" d="M22 0h16l-8 14z"/><path fill="#00A3B7" d="M11 26h16L19 11z"/></svg><span><b>wi</b>digital</span></a>
+  <small>Demos para clientes</small>
+</div></header>
 
-  const porCliente = demos.reduce((acc, d) => ((acc[d.cliente] ??= []).push(d), acc), {});
-  document.getElementById("catalogo").innerHTML = Object.entries(porCliente).map(([cliente, items]) => `
-    <h2>${cliente}</h2>
-    <div class="grid">
-      ${items.map(d => `<a class="card" href="${d.ruta}"><strong>${d.titulo}</strong><span>${d.descripcion}</span></a>`).join("")}
-    </div>`).join("");
+<main class="wrap">
+  <section class="intro">
+    <h1>Prototipos que se pueden <em>tocar</em></h1>
+    <p class="lead">Pruebas de concepto y demos navegables que preparamos para cada cliente. Elige un cliente para ver sus proyectos.</p>
+  </section>
+  <ul class="list" id="list"></ul>
+</main>
+
+<footer class="foot"><div class="wrap"><span>widigital, consultoría tecnológica</span><a href="https://widigital.es">widigital.es</a></div></footer>
+
+<script>
+  // Un elemento por carpeta de primer nivel. Para añadir un cliente, añade una entrada aquí.
+  const clientes = [
+    { nombre: "Barents", ruta: "/barents/", descripcion: "Plataforma de caución y gestión de siniestros.", proyectos: 2 }
+  ];
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  document.getElementById("list").innerHTML = clientes.map((c, i) => `
+    <li><a href="${esc(c.ruta)}">
+      <span class="num">${String(i + 1).padStart(2, "0")}</span>
+      <div><h2>${esc(c.nombre)}</h2><p>${esc(c.descripcion)} ${c.proyectos} ${c.proyectos === 1 ? "proyecto" : "proyectos"}.</p></div>
+      <span class="cta">Ver proyectos<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a></li>`).join("");
 </script>
 </body>
 </html>
